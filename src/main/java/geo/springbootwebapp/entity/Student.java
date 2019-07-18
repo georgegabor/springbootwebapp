@@ -1,4 +1,4 @@
-package net.javaguides.springboot.tutorial.entity;
+package geo.springbootwebapp.entity;
 
 
 import javax.persistence.Column;
