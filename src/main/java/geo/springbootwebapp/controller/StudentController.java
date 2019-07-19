@@ -3,7 +3,7 @@ package geo.springbootwebapp.controller;
 import javax.validation.Valid;
 
 import geo.springbootwebapp.entity.Student;
-import geo.springbootwebapp.repository.StudentRepository;
+import geo.springbootwebapp.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,15 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/students/")
+@RequestMapping("/students")
 public class StudentController {
 
-	private final StudentRepository studentRepository;
-
-	@Autowired
-	public StudentController(StudentRepository studentRepository) {
-		this.studentRepository = studentRepository;
-	}
+    @Autowired
+	private IStudentRepository studentRepository;
 
 	@GetMapping("signup")
 	public String showSignUpForm(Student student) {
@@ -50,6 +46,7 @@ public class StudentController {
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		Student student = studentRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
+
 		model.addAttribute("student", student);
 		return "update-student";
 	}
