@@ -1,7 +1,5 @@
 package geo.springbootwebapp.entity;
 
-
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,11 +8,12 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 
+@Getter
+@Setter
 @Entity
 @Table(name="students")
-public class Student implements Serializable {
+public class Student {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,36 +36,4 @@ public class Student implements Serializable {
         this.name = name;
         this.email = email;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-	public long getPhoneNo() {
-		return phoneNo;
-	}
-
-	public void setPhoneNo(long phoneNo) {
-		this.phoneNo = phoneNo;
-	}
 }

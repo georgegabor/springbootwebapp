@@ -55,7 +55,6 @@ public class StudentController {
 	public String updateStudent(@PathVariable("id") long id, @Valid Student student, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
-			student.setId(id);
 			return "update-student";
 		}
 
