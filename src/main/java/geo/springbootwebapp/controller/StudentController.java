@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping
 public class StudentController {
 
     @Autowired
 	private IStudentRepository studentRepository;
 
-	@GetMapping("signup")
+	@GetMapping("/signup")
 	public String showSignUpForm(Student student) {
 		return "add-student";
 	}
 
-	@GetMapping("list")
+	@GetMapping("/list")
 	public String showUpdateForm(Model model) {
 		model.addAttribute("students", studentRepository.findAll());
 		return "index";
 	}
 
-	@PostMapping("add")
+	@PostMapping("/add")
 	public String addStudent(@Valid Student student, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "add-student";
@@ -42,7 +42,7 @@ public class StudentController {
 		return "redirect:list";
 	}
 
-	@GetMapping("edit/{id}")
+	@GetMapping("/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		Student student = studentRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
@@ -51,7 +51,7 @@ public class StudentController {
 		return "update-student";
 	}
 
-	@PostMapping("update/{id}")
+	@PostMapping("/update/{id}")
 	public String updateStudent(@PathVariable("id") long id, @Valid Student student, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
@@ -63,7 +63,7 @@ public class StudentController {
 		return "index";
 	}
 
-	@GetMapping("delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteStudent(@PathVariable("id") long id, Model model) {
 		Student student = studentRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
