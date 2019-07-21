@@ -3,7 +3,7 @@ package geo.springbootwebapp.controller;
 import javax.validation.Valid;
 
 import geo.springbootwebapp.entity.Student;
-import geo.springbootwebapp.repository.IStudentRepository;
+import geo.springbootwebapp.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController {
 
     @Autowired
-	private IStudentRepository studentRepository;
+	private IStudentService studentService;
 
 	@GetMapping("/signup")
 	public String showSignUpForm(Student student) {
@@ -28,7 +28,7 @@ public class StudentController {
 
 	@GetMapping("/list")
 	public String showUpdateForm(Model model) {
-		model.addAttribute("students", studentRepository.findAll());
+		model.addAttribute("students", studentService.findAll());
 		return "index";
 	}
 
@@ -38,13 +38,13 @@ public class StudentController {
 			return "add-student";
 		}
 
-		studentRepository.save(student);
+		studentService.create(student);
 		return "redirect:list";
 	}
 
 	@GetMapping("/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Student student = studentRepository.findById(id)
+		Student student = studentService.read(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
 
 		model.addAttribute("student", student);
@@ -58,17 +58,17 @@ public class StudentController {
 			return "update-student";
 		}
 
-		studentRepository.save(student);
-		model.addAttribute("students", studentRepository.findAll());
+		studentService.update(student);
+		model.addAttribute("students", studentService.findAll());
 		return "index";
 	}
 
 	@GetMapping("/delete/{id}")
 	public String deleteStudent(@PathVariable("id") long id, Model model) {
-		Student student = studentRepository.findById(id)
+		Student student = studentService.read(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
-		studentRepository.delete(student);
-		model.addAttribute("students", studentRepository.findAll());
+		studentService.delete(id);
+		model.addAttribute("students", studentService.findAll());
 		return "index";
 	}
 }
