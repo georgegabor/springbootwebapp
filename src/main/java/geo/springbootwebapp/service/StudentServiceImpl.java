@@ -38,4 +38,5 @@ public class StudentServiceImpl implements IStudentService {
     public void delete(Long id) {
         studentRepository.deleteById(id);
     }
+
 }

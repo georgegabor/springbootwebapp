@@ -12,5 +12,4 @@ public interface IStudentService {
      Optional<Student> read(Long id);
      void update(Student student);
      void delete(Long id);
-
 }
